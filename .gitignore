@@ -1,0 +1,17 @@
+# Credentials and secrets
+*.pem
+*.key
+id_rsa
+.env
+passwords.txt
+secrets/
+
+# System junk
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/settings.json
+
+# Logs
+*.log
+logs/

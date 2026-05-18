@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for sensitive files
+        run: |
+          echo "Checking for files that should not be committed..."
+          if find . -name "*.pem" -o -name "*.key" -o -name "id_rsa" | grep -q .; then
+            echo "ERROR: Sensitive file detected — do not commit keys or credentials"
+            exit 1
+          fi
+          echo "No sensitive files found — clean"
+
+      - name: Confirm README exists
+        run: |
+          if [ ! -f README.md ]; then
+            echo "ERROR: README.md is missing"
+            exit 1
+          fi
+          echo "README.md found — good"
